@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spacesync-frontend
+  labels:
+    app: spacesync-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: spacesync-frontend
+  template:
+    metadata:
+      labels:
+        app: spacesync-frontend
+    spec:
+      containers:
+      - name: spacesync-frontend
+        image: spacesync-frontend:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spacesync-frontend-service
+spec:
+  selector:
+    app: spacesync-frontend
+  ports:
+  - port: 80
+    targetPort: 80
+  type: ClusterIP 
